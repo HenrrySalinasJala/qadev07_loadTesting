@@ -1,0 +1,19 @@
+Label,# Samples,Average,Min,Max,Std. Dev.,Error %,Throughput,KB/sec,Avg. Bytes
+Create account,5,513,475,589,45.99,0.00%,0.1,0.05,763.8
+get token,5,294,245,468,87.14,0.00%,0.1,0.04,577
+Is authenticated,5,336,239,481,112.96,0.00%,0.1,0.03,447
+Project A,5,491,476,512,11.66,0.00%,0.1,0.05,857.2
+Project B,5,507,465,565,35.72,0.00%,0.1,0.06,856.4
+Make Project B to be a sub­project from Project A ,5,655,477,1300,322.48,0.00%,0.1,0.05,859
+Create Item X under Project A C,5,490,466,517,18.1,0.00%,0.1,0.06,969
+Update Item X and set high priority to it,5,488,480,496,5.2,0.00%,0.1,0.06,969
+Create Item Y under Project A C,5,497,482,503,7.77,0.00%,0.1,0.06,969
+Update Item Y and set due date to 3 hours from now,5,492,475,508,10.77,0.00%,0.1,0.06,969
+Debug Sampler,20,0,0,2,0.54,0.00%,0.2,0.19,804.5
+Create Item Z under Project A C,5,510,476,579,35.61,0.00%,0.1,0.06,969
+Move Item Z to Project B,5,514,483,572,30.6,0.00%,0.1,0.06,969
+get items by project,5,1055,259,3524,1237.95,0.00%,0.1,0.04,655.2
+Delete item,10,376,250,537,120.06,0.00%,0.1,0.07,585.2
+Get bin items,5,358,257,510,115.78,0.00%,0.1,0.04,709.6
+Delete account,5,366,264,539,119.13,0.00%,0.1,0.05,749
+TOTAL,105,396,0,3524,375.68,0.00%,1.1,0.86,794.1

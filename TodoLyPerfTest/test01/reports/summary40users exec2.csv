@@ -1,0 +1,19 @@
+Label,# Samples,Average,Avg. Bytes
+Create account,200,608,763.7
+get token,200,500,577.1
+Is authenticated,200,536,446.4
+Project A,200,607,855.3
+Project B,200,699,855.4
+Make Project B to be a sub­project from Project A ,200,605,858.4
+Create Item X under Project A C,200,736,970.3
+Update Item X and set high priority to it,200,670,970.1
+Create Item Y under Project A C,200,627,970.2
+Update Item Y and set due date to 3 hours from now,200,663,970
+Debug Sampler,800,0,806.1
+Create Item Z under Project A C,200,612,969.8
+Move Item Z to Project B,200,569,969.9
+get items by project,200,538,655
+Delete item,400,521,584.5
+Get bin items,200,534,709.1
+Delete account,200,405,749.4
+TOTAL,4200,474,794.5
