@@ -1,0 +1,3 @@
+Label,# Samples,Average,Min,Max,Std. Dev.,Error %,Throughput,KB/sec,Avg. Bytes
+05 flow - create N child items:main flow,40,19211,14405,26406,2979.27,0.00%,1.0,12.77,13010.9
+TOTAL,40,19211,14405,26406,2979.27,0.00%,1.0,12.77,13010.9

@@ -1,0 +1,3 @@
+Label,# Samples,Average,Min,Max,Std. Dev.,Error %,Throughput,KB/sec,Avg. Bytes
+08 flow - delete all project done items:main flow,10,13428,11607,14769,1453.56,0.00%,.3,7.16,25388.2
+TOTAL,10,13428,11607,14769,1453.56,0.00%,.3,7.16,25388.2

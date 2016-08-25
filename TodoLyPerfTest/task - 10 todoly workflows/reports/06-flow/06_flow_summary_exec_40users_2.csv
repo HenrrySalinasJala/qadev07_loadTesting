@@ -1,0 +1,3 @@
+Label,# Samples,Average,Min,Max,Std. Dev.,Error %,Throughput,KB/sec,Avg. Bytes
+06 flow - get and delete all items by root item:main flow,40,12468,10994,17530,1870.58,0.00%,1.1,26.37,24673.5
+TOTAL,40,12468,10994,17530,1870.58,0.00%,1.1,26.37,24673.5
