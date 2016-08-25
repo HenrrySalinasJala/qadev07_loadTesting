@@ -1,0 +1,3 @@
+Label,# Samples,Average,Min,Max,Std. Dev.,Error %,Throughput,KB/sec,Avg. Bytes
+02 flow-create and move  items into a project:main flow,70,26342,24047,34246,2373.04,0.00%,.9,43.08,46453.1
+TOTAL,70,26342,24047,34246,2373.04,0.00%,.9,43.08,46453.1

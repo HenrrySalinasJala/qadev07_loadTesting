@@ -1,0 +1,3 @@
+Label,# Samples,Average,Min,Max,Std. Dev.,Error %,Throughput,KB/sec,Avg. Bytes
+03 flow- delete n items from a project:main flow,70,9566,8353,15508,1668.38,0.00%,2.2,36.34,16623.2
+TOTAL,70,9566,8353,15508,1668.38,0.00%,2.2,36.34,16623.2

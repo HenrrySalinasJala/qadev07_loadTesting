@@ -1,0 +1,3 @@
+Label,# Samples,Average,Min,Max,Std. Dev.,Error %,Throughput,KB/sec,Avg. Bytes
+01 flow-create item inside a project and set its priority:main flow,40,3021,2663,3796,242.30,0.00%,3.8,19.93,5404.6
+TOTAL,40,3021,2663,3796,242.30,0.00%,3.8,19.93,5404.6

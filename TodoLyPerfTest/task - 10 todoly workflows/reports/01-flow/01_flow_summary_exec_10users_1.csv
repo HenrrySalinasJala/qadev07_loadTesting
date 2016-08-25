@@ -1,0 +1,3 @@
+Label,# Samples,Average,Min,Max,Std. Dev.,Error %,Throughput,KB/sec,Avg. Bytes
+main flow,10,2699,2652,2770,34.13,0.00%,1.1,5.72,5403.2
+TOTAL,10,2699,2652,2770,34.13,0.00%,1.1,5.72,5403.2
