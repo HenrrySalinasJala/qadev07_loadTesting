@@ -33,6 +33,11 @@
             <stringProp name="Argument.value">500</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
+          <elementProp name="currentPath" elementType="Argument">
+            <stringProp name="Argument.name">currentPath</stringProp>
+            <stringProp name="Argument.value">${__BeanShell(import org.apache.jmeter.services.FileServer; FileServer.getFileServer().getBaseDir();)}${__BeanShell(File.separator,)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
         </collectionProp>
       </Arguments>
       <hashTree/>
@@ -95,7 +100,7 @@
         <RecordingController guiclass="RecordController" testclass="RecordingController" testname="Recording Controller" enabled="true"/>
         <hashTree/>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="01 flow-create item inside a project and set its priority" enabled="false">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="01 flow-create item inside a project and set its priority" enabled="true">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
@@ -411,6 +416,43 @@ vars.put(&quot;priorityToSet&quot;,priorityToSet);</stringProp>
                   </ResponseAssertion>
                   <hashTree/>
                 </hashTree>
+                <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Update item status to done" enabled="true">
+                  <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+                  <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+                    <collectionProp name="Arguments.arguments">
+                      <elementProp name="" elementType="HTTPArgument">
+                        <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                        <stringProp name="Argument.value">{&quot;Checked&quot;:true}</stringProp>
+                        <stringProp name="Argument.metadata">=</stringProp>
+                      </elementProp>
+                    </collectionProp>
+                  </elementProp>
+                  <stringProp name="HTTPSampler.domain"></stringProp>
+                  <stringProp name="HTTPSampler.port"></stringProp>
+                  <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+                  <stringProp name="HTTPSampler.response_timeout"></stringProp>
+                  <stringProp name="HTTPSampler.protocol"></stringProp>
+                  <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+                  <stringProp name="HTTPSampler.path">API/Items/${id_item_created}.json</stringProp>
+                  <stringProp name="HTTPSampler.method">PUT</stringProp>
+                  <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+                  <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+                  <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+                  <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+                  <boolProp name="HTTPSampler.monitor">false</boolProp>
+                  <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+                </HTTPSamplerProxy>
+                <hashTree>
+                  <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+                    <collectionProp name="Asserion.test_strings">
+                      <stringProp name="-1638352053">&quot;Checked&quot;:true</stringProp>
+                    </collectionProp>
+                    <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
+                    <boolProp name="Assertion.assume_success">false</boolProp>
+                    <intProp name="Assertion.test_type">2</intProp>
+                  </ResponseAssertion>
+                  <hashTree/>
+                </hashTree>
               </hashTree>
               <GenericController guiclass="LogicControllerGui" testclass="GenericController" testname="logout" enabled="true"/>
               <hashTree>
@@ -466,7 +508,7 @@ vars.put(&quot;priorityToSet&quot;,priorityToSet);</stringProp>
                     <idleTime>true</idleTime>
                   </value>
                 </objProp>
-                <stringProp name="filename"></stringProp>
+                <stringProp name="filename">${currentPath}\reports\01_flow_summary_${__time(ddMMyyyy HHmmss)}.csv</stringProp>
               </ResultCollector>
               <hashTree/>
               <ResultCollector guiclass="AssertionVisualizer" testclass="ResultCollector" testname="Assertion Results" enabled="true">
@@ -529,9 +571,77 @@ vars.put(&quot;priorityToSet&quot;,priorityToSet);</stringProp>
               <hashTree/>
             </hashTree>
           </hashTree>
+          <ResultCollector guiclass="SummaryReport" testclass="ResultCollector" testname="Summary Report" enabled="true">
+            <boolProp name="ResultCollector.error_logging">false</boolProp>
+            <objProp>
+              <name>saveConfig</name>
+              <value class="SampleSaveConfiguration">
+                <time>true</time>
+                <latency>true</latency>
+                <timestamp>true</timestamp>
+                <success>true</success>
+                <label>true</label>
+                <code>true</code>
+                <message>true</message>
+                <threadName>true</threadName>
+                <dataType>true</dataType>
+                <encoding>false</encoding>
+                <assertions>true</assertions>
+                <subresults>true</subresults>
+                <responseData>false</responseData>
+                <samplerData>false</samplerData>
+                <xml>false</xml>
+                <fieldNames>true</fieldNames>
+                <responseHeaders>false</responseHeaders>
+                <requestHeaders>false</requestHeaders>
+                <responseDataOnError>false</responseDataOnError>
+                <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+                <assertionsResultsToSave>0</assertionsResultsToSave>
+                <bytes>true</bytes>
+                <threadCounts>true</threadCounts>
+                <idleTime>true</idleTime>
+              </value>
+            </objProp>
+            <stringProp name="filename"></stringProp>
+          </ResultCollector>
+          <hashTree/>
+          <ResultCollector guiclass="AssertionVisualizer" testclass="ResultCollector" testname="Assertion Results" enabled="true">
+            <boolProp name="ResultCollector.error_logging">false</boolProp>
+            <objProp>
+              <name>saveConfig</name>
+              <value class="SampleSaveConfiguration">
+                <time>true</time>
+                <latency>true</latency>
+                <timestamp>true</timestamp>
+                <success>true</success>
+                <label>true</label>
+                <code>true</code>
+                <message>true</message>
+                <threadName>true</threadName>
+                <dataType>true</dataType>
+                <encoding>false</encoding>
+                <assertions>true</assertions>
+                <subresults>true</subresults>
+                <responseData>false</responseData>
+                <samplerData>false</samplerData>
+                <xml>false</xml>
+                <fieldNames>true</fieldNames>
+                <responseHeaders>false</responseHeaders>
+                <requestHeaders>false</requestHeaders>
+                <responseDataOnError>false</responseDataOnError>
+                <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+                <assertionsResultsToSave>0</assertionsResultsToSave>
+                <bytes>true</bytes>
+                <threadCounts>true</threadCounts>
+                <idleTime>true</idleTime>
+              </value>
+            </objProp>
+            <stringProp name="filename"></stringProp>
+          </ResultCollector>
+          <hashTree/>
         </hashTree>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="02 flow-move n items into a project" enabled="false">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="02 flow-create and move  items into a project" enabled="false">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
@@ -847,6 +957,43 @@ vars.put(&quot;priorityToSet&quot;,priorityToSet);</stringProp>
                     </ResponseAssertion>
                     <hashTree/>
                   </hashTree>
+                  <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Update item status to done" enabled="true">
+                    <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+                    <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+                      <collectionProp name="Arguments.arguments">
+                        <elementProp name="" elementType="HTTPArgument">
+                          <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                          <stringProp name="Argument.value">{&quot;Checked&quot;:true}</stringProp>
+                          <stringProp name="Argument.metadata">=</stringProp>
+                        </elementProp>
+                      </collectionProp>
+                    </elementProp>
+                    <stringProp name="HTTPSampler.domain"></stringProp>
+                    <stringProp name="HTTPSampler.port"></stringProp>
+                    <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+                    <stringProp name="HTTPSampler.response_timeout"></stringProp>
+                    <stringProp name="HTTPSampler.protocol"></stringProp>
+                    <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+                    <stringProp name="HTTPSampler.path">API/Items/${id_item}.json</stringProp>
+                    <stringProp name="HTTPSampler.method">PUT</stringProp>
+                    <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+                    <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+                    <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+                    <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+                    <boolProp name="HTTPSampler.monitor">false</boolProp>
+                    <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+                  </HTTPSamplerProxy>
+                  <hashTree>
+                    <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+                      <collectionProp name="Asserion.test_strings">
+                        <stringProp name="-1638352053">&quot;Checked&quot;:true</stringProp>
+                      </collectionProp>
+                      <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
+                      <boolProp name="Assertion.assume_success">false</boolProp>
+                      <intProp name="Assertion.test_type">2</intProp>
+                    </ResponseAssertion>
+                    <hashTree/>
+                  </hashTree>
                 </hashTree>
               </hashTree>
               <GenericController guiclass="LogicControllerGui" testclass="GenericController" testname="logout" enabled="true"/>
@@ -967,6 +1114,40 @@ vars.put(&quot;priorityToSet&quot;,priorityToSet);</stringProp>
             </hashTree>
           </hashTree>
           <ResultCollector guiclass="SummaryReport" testclass="ResultCollector" testname="Summary Report" enabled="true">
+            <boolProp name="ResultCollector.error_logging">false</boolProp>
+            <objProp>
+              <name>saveConfig</name>
+              <value class="SampleSaveConfiguration">
+                <time>true</time>
+                <latency>true</latency>
+                <timestamp>true</timestamp>
+                <success>true</success>
+                <label>true</label>
+                <code>true</code>
+                <message>true</message>
+                <threadName>true</threadName>
+                <dataType>true</dataType>
+                <encoding>false</encoding>
+                <assertions>true</assertions>
+                <subresults>true</subresults>
+                <responseData>false</responseData>
+                <samplerData>false</samplerData>
+                <xml>false</xml>
+                <fieldNames>true</fieldNames>
+                <responseHeaders>false</responseHeaders>
+                <requestHeaders>false</requestHeaders>
+                <responseDataOnError>false</responseDataOnError>
+                <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+                <assertionsResultsToSave>0</assertionsResultsToSave>
+                <bytes>true</bytes>
+                <threadCounts>true</threadCounts>
+                <idleTime>true</idleTime>
+              </value>
+            </objProp>
+            <stringProp name="filename"></stringProp>
+          </ResultCollector>
+          <hashTree/>
+          <ResultCollector guiclass="AssertionVisualizer" testclass="ResultCollector" testname="Assertion Results" enabled="true">
             <boolProp name="ResultCollector.error_logging">false</boolProp>
             <objProp>
               <name>saveConfig</name>
@@ -1265,6 +1446,43 @@ vars.put(&quot;priorityToSet&quot;,priorityToSet);</stringProp>
                       <stringProp name="JSONPostProcessor.jsonPathExprs">$..Id</stringProp>
                       <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
                     </JSONPostProcessor>
+                    <hashTree/>
+                  </hashTree>
+                  <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Update item status to done" enabled="true">
+                    <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+                    <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+                      <collectionProp name="Arguments.arguments">
+                        <elementProp name="" elementType="HTTPArgument">
+                          <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                          <stringProp name="Argument.value">{&quot;Checked&quot;:true}</stringProp>
+                          <stringProp name="Argument.metadata">=</stringProp>
+                        </elementProp>
+                      </collectionProp>
+                    </elementProp>
+                    <stringProp name="HTTPSampler.domain"></stringProp>
+                    <stringProp name="HTTPSampler.port"></stringProp>
+                    <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+                    <stringProp name="HTTPSampler.response_timeout"></stringProp>
+                    <stringProp name="HTTPSampler.protocol"></stringProp>
+                    <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+                    <stringProp name="HTTPSampler.path">API/Items/${id_item}.json</stringProp>
+                    <stringProp name="HTTPSampler.method">PUT</stringProp>
+                    <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+                    <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+                    <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+                    <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+                    <boolProp name="HTTPSampler.monitor">false</boolProp>
+                    <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+                  </HTTPSamplerProxy>
+                  <hashTree>
+                    <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+                      <collectionProp name="Asserion.test_strings">
+                        <stringProp name="-1638352053">&quot;Checked&quot;:true</stringProp>
+                      </collectionProp>
+                      <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
+                      <boolProp name="Assertion.assume_success">false</boolProp>
+                      <intProp name="Assertion.test_type">2</intProp>
+                    </ResponseAssertion>
                     <hashTree/>
                   </hashTree>
                 </hashTree>
@@ -2094,6 +2312,40 @@ vars.put(&quot;priorityToSet&quot;,priorityToSet);</stringProp>
             <stringProp name="filename"></stringProp>
           </ResultCollector>
           <hashTree/>
+          <ResultCollector guiclass="AssertionVisualizer" testclass="ResultCollector" testname="Assertion Results" enabled="true">
+            <boolProp name="ResultCollector.error_logging">false</boolProp>
+            <objProp>
+              <name>saveConfig</name>
+              <value class="SampleSaveConfiguration">
+                <time>true</time>
+                <latency>true</latency>
+                <timestamp>true</timestamp>
+                <success>true</success>
+                <label>true</label>
+                <code>true</code>
+                <message>true</message>
+                <threadName>true</threadName>
+                <dataType>true</dataType>
+                <encoding>false</encoding>
+                <assertions>true</assertions>
+                <subresults>true</subresults>
+                <responseData>false</responseData>
+                <samplerData>false</samplerData>
+                <xml>false</xml>
+                <fieldNames>true</fieldNames>
+                <responseHeaders>false</responseHeaders>
+                <requestHeaders>false</requestHeaders>
+                <responseDataOnError>false</responseDataOnError>
+                <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+                <assertionsResultsToSave>0</assertionsResultsToSave>
+                <bytes>true</bytes>
+                <threadCounts>true</threadCounts>
+                <idleTime>true</idleTime>
+              </value>
+            </objProp>
+            <stringProp name="filename"></stringProp>
+          </ResultCollector>
+          <hashTree/>
         </hashTree>
       </hashTree>
       <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="05 flow - create N child items" enabled="false">
@@ -2640,9 +2892,43 @@ vars.put(&quot;priorityToSet&quot;,priorityToSet);</stringProp>
             <stringProp name="filename"></stringProp>
           </ResultCollector>
           <hashTree/>
+          <ResultCollector guiclass="AssertionVisualizer" testclass="ResultCollector" testname="Assertion Results" enabled="true">
+            <boolProp name="ResultCollector.error_logging">false</boolProp>
+            <objProp>
+              <name>saveConfig</name>
+              <value class="SampleSaveConfiguration">
+                <time>true</time>
+                <latency>true</latency>
+                <timestamp>true</timestamp>
+                <success>true</success>
+                <label>true</label>
+                <code>true</code>
+                <message>true</message>
+                <threadName>true</threadName>
+                <dataType>true</dataType>
+                <encoding>false</encoding>
+                <assertions>true</assertions>
+                <subresults>true</subresults>
+                <responseData>false</responseData>
+                <samplerData>false</samplerData>
+                <xml>false</xml>
+                <fieldNames>true</fieldNames>
+                <responseHeaders>false</responseHeaders>
+                <requestHeaders>false</requestHeaders>
+                <responseDataOnError>false</responseDataOnError>
+                <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+                <assertionsResultsToSave>0</assertionsResultsToSave>
+                <bytes>true</bytes>
+                <threadCounts>true</threadCounts>
+                <idleTime>true</idleTime>
+              </value>
+            </objProp>
+            <stringProp name="filename"></stringProp>
+          </ResultCollector>
+          <hashTree/>
         </hashTree>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="06 flow - delete N child items" enabled="false">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="06 flow - get and delete all items by root item" enabled="false">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
@@ -3245,6 +3531,40 @@ vars.put(&quot;priorityToSet&quot;,priorityToSet);</stringProp>
             <stringProp name="filename"></stringProp>
           </ResultCollector>
           <hashTree/>
+          <ResultCollector guiclass="AssertionVisualizer" testclass="ResultCollector" testname="Assertion Results" enabled="true">
+            <boolProp name="ResultCollector.error_logging">false</boolProp>
+            <objProp>
+              <name>saveConfig</name>
+              <value class="SampleSaveConfiguration">
+                <time>true</time>
+                <latency>true</latency>
+                <timestamp>true</timestamp>
+                <success>true</success>
+                <label>true</label>
+                <code>true</code>
+                <message>true</message>
+                <threadName>true</threadName>
+                <dataType>true</dataType>
+                <encoding>false</encoding>
+                <assertions>true</assertions>
+                <subresults>true</subresults>
+                <responseData>false</responseData>
+                <samplerData>false</samplerData>
+                <xml>false</xml>
+                <fieldNames>true</fieldNames>
+                <responseHeaders>false</responseHeaders>
+                <requestHeaders>false</requestHeaders>
+                <responseDataOnError>false</responseDataOnError>
+                <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+                <assertionsResultsToSave>0</assertionsResultsToSave>
+                <bytes>true</bytes>
+                <threadCounts>true</threadCounts>
+                <idleTime>true</idleTime>
+              </value>
+            </objProp>
+            <stringProp name="filename"></stringProp>
+          </ResultCollector>
+          <hashTree/>
         </hashTree>
       </hashTree>
       <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="07 flow - Pospone the item due date" enabled="false">
@@ -3803,6 +4123,40 @@ vars.put(&quot;priorityToSet&quot;,priorityToSet);</stringProp>
             </hashTree>
           </hashTree>
           <ResultCollector guiclass="SummaryReport" testclass="ResultCollector" testname="Summary Report" enabled="true">
+            <boolProp name="ResultCollector.error_logging">false</boolProp>
+            <objProp>
+              <name>saveConfig</name>
+              <value class="SampleSaveConfiguration">
+                <time>true</time>
+                <latency>true</latency>
+                <timestamp>true</timestamp>
+                <success>true</success>
+                <label>true</label>
+                <code>true</code>
+                <message>true</message>
+                <threadName>true</threadName>
+                <dataType>true</dataType>
+                <encoding>false</encoding>
+                <assertions>true</assertions>
+                <subresults>true</subresults>
+                <responseData>false</responseData>
+                <samplerData>false</samplerData>
+                <xml>false</xml>
+                <fieldNames>true</fieldNames>
+                <responseHeaders>false</responseHeaders>
+                <requestHeaders>false</requestHeaders>
+                <responseDataOnError>false</responseDataOnError>
+                <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+                <assertionsResultsToSave>0</assertionsResultsToSave>
+                <bytes>true</bytes>
+                <threadCounts>true</threadCounts>
+                <idleTime>true</idleTime>
+              </value>
+            </objProp>
+            <stringProp name="filename"></stringProp>
+          </ResultCollector>
+          <hashTree/>
+          <ResultCollector guiclass="AssertionVisualizer" testclass="ResultCollector" testname="Assertion Results" enabled="true">
             <boolProp name="ResultCollector.error_logging">false</boolProp>
             <objProp>
               <name>saveConfig</name>
@@ -4455,6 +4809,40 @@ vars.put(&quot;priorityToSet&quot;,priorityToSet);</stringProp>
             <stringProp name="filename"></stringProp>
           </ResultCollector>
           <hashTree/>
+          <ResultCollector guiclass="AssertionVisualizer" testclass="ResultCollector" testname="Assertion Results" enabled="true">
+            <boolProp name="ResultCollector.error_logging">false</boolProp>
+            <objProp>
+              <name>saveConfig</name>
+              <value class="SampleSaveConfiguration">
+                <time>true</time>
+                <latency>true</latency>
+                <timestamp>true</timestamp>
+                <success>true</success>
+                <label>true</label>
+                <code>true</code>
+                <message>true</message>
+                <threadName>true</threadName>
+                <dataType>true</dataType>
+                <encoding>false</encoding>
+                <assertions>true</assertions>
+                <subresults>true</subresults>
+                <responseData>false</responseData>
+                <samplerData>false</samplerData>
+                <xml>false</xml>
+                <fieldNames>true</fieldNames>
+                <responseHeaders>false</responseHeaders>
+                <requestHeaders>false</requestHeaders>
+                <responseDataOnError>false</responseDataOnError>
+                <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+                <assertionsResultsToSave>0</assertionsResultsToSave>
+                <bytes>true</bytes>
+                <threadCounts>true</threadCounts>
+                <idleTime>true</idleTime>
+              </value>
+            </objProp>
+            <stringProp name="filename"></stringProp>
+          </ResultCollector>
+          <hashTree/>
         </hashTree>
       </hashTree>
       <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="09 flow - update user settings" enabled="false">
@@ -4978,9 +5366,43 @@ vars.put(&quot;priorityToSet&quot;,priorityToSet);</stringProp>
             <stringProp name="filename"></stringProp>
           </ResultCollector>
           <hashTree/>
+          <ResultCollector guiclass="AssertionVisualizer" testclass="ResultCollector" testname="Assertion Results" enabled="true">
+            <boolProp name="ResultCollector.error_logging">false</boolProp>
+            <objProp>
+              <name>saveConfig</name>
+              <value class="SampleSaveConfiguration">
+                <time>true</time>
+                <latency>true</latency>
+                <timestamp>true</timestamp>
+                <success>true</success>
+                <label>true</label>
+                <code>true</code>
+                <message>true</message>
+                <threadName>true</threadName>
+                <dataType>true</dataType>
+                <encoding>false</encoding>
+                <assertions>true</assertions>
+                <subresults>true</subresults>
+                <responseData>false</responseData>
+                <samplerData>false</samplerData>
+                <xml>false</xml>
+                <fieldNames>true</fieldNames>
+                <responseHeaders>false</responseHeaders>
+                <requestHeaders>false</requestHeaders>
+                <responseDataOnError>false</responseDataOnError>
+                <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+                <assertionsResultsToSave>0</assertionsResultsToSave>
+                <bytes>true</bytes>
+                <threadCounts>true</threadCounts>
+                <idleTime>true</idleTime>
+              </value>
+            </objProp>
+            <stringProp name="filename"></stringProp>
+          </ResultCollector>
+          <hashTree/>
         </hashTree>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="10 flow - create and delete all projects" enabled="true">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="10 flow - create and delete all projects" enabled="false">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
@@ -5387,6 +5809,40 @@ vars.put(&quot;priorityToSet&quot;,priorityToSet);</stringProp>
             </hashTree>
           </hashTree>
           <ResultCollector guiclass="SummaryReport" testclass="ResultCollector" testname="Summary Report" enabled="true">
+            <boolProp name="ResultCollector.error_logging">false</boolProp>
+            <objProp>
+              <name>saveConfig</name>
+              <value class="SampleSaveConfiguration">
+                <time>true</time>
+                <latency>true</latency>
+                <timestamp>true</timestamp>
+                <success>true</success>
+                <label>true</label>
+                <code>true</code>
+                <message>true</message>
+                <threadName>true</threadName>
+                <dataType>true</dataType>
+                <encoding>false</encoding>
+                <assertions>true</assertions>
+                <subresults>true</subresults>
+                <responseData>false</responseData>
+                <samplerData>false</samplerData>
+                <xml>false</xml>
+                <fieldNames>true</fieldNames>
+                <responseHeaders>false</responseHeaders>
+                <requestHeaders>false</requestHeaders>
+                <responseDataOnError>false</responseDataOnError>
+                <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+                <assertionsResultsToSave>0</assertionsResultsToSave>
+                <bytes>true</bytes>
+                <threadCounts>true</threadCounts>
+                <idleTime>true</idleTime>
+              </value>
+            </objProp>
+            <stringProp name="filename"></stringProp>
+          </ResultCollector>
+          <hashTree/>
+          <ResultCollector guiclass="AssertionVisualizer" testclass="ResultCollector" testname="Assertion Results" enabled="true">
             <boolProp name="ResultCollector.error_logging">false</boolProp>
             <objProp>
               <name>saveConfig</name>
